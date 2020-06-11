@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Rater | Login/Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/log_reg.css' %}">
+    <script defer src="{% static 'js/logReg.js' %}"></script>
+</head>
+<body>
+    <div id="contianer">
+        <div id="login">
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <h2>Register</h2>
+                <div class="labels">
+                    <p>First Name</p>
+                    <p>Last Name</p>
+                    <p>Email</p>
+                    <p>Password</p>
+                    <p>Confirm Password</p>
+                </div>
+                <div class="inputs">
+                    <input type="text" name="fname">
+                    <input type="text" name="lname">
+                    <input type="text" name="email">
+                    <input type="password" name="pw">
+                    <input type="password" name="confpw">
+                </div>
+                <input type="submit" value="Register" class="submit">
+            </form>
+            <div id="login">
+                <form action="/login_user" method="POST">
+                    {% csrf_token %}
+                    <h2>Login</h2>
+                    <div class="labels">
+                        <p>Email</p>
+                        <p>Password</p>
+                    </div>
+                    <div class="inputs">
+                        <input type="text" name="email" class="input">
+                        <input type="password" name="pw" class="input">
+                    </div>
+                    <input type="submit" value="Log In" class="submit">
+                </form>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
