@@ -5,7 +5,9 @@ urlpatterns = [
     path('', views.index),
     path('register', views.reg_user),
     path('login', views.log_user),
-    path('success/<int:id>', views.profile),
-    path('add_recipe', views.add_recipe),
-    path('edit_recipe', views.edit_recipe)
+    path('profile/<int:id>', views.profile),
+    path('add_recipe', views.render_add_form),
+    path('process_recipe', views.add_recipe),
+    path('edit_recipe/<int:id>', views.render_edit_form),
+    path('logout', views.logout),
 ]

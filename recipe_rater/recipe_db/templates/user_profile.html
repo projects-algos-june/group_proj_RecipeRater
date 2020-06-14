@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{request.session.user}} | Recipes</title>
+    
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- End Bootstrap -->
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1 class="display-4">Welcome {{request.session.user}}!</h4>
+            <div class="nav">
+                <a href="/add_recipe" class="btn btn-success">Add Recipe</a>
+                <form action="/logout" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout" class="logout btn btn-outline-danger">
+                </form>
+            </div>
+            <div id="content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Recipe</th>
+                            <th></th>
+                            <th>Description</th>
+                            <th>Cookbook</th>
+                            <th>Rating</th>
+                            <th>Notes</th>
+                            <th>Photo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for recipe in user_recipes %}
+                        <tr>
+                            <th scope="row">{{recipe.title}}</th>
+                            <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
+                            <td><p class="text-break">{{recipe.description}}</p></td>
+                            <td>{{recipe.book.title}}</td>
+                            <td>{{recipe.rating}}</td>
+                            <td><p class="text-break">{{recipe.notes}}</p></td>
+                            {% if recipe.photo %}
+                            <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img img-fluid"></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
