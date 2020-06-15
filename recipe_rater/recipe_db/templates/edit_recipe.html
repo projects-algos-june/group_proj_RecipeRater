@@ -19,11 +19,11 @@
 <body>
     <div class="container">
         <div id="header">
-            <h1>Add Recipe</h1>
+            <h1>Edit Recipe: {{curr_recipe.title}}</h1>
             <a href="/profile/{{request.session.id}}" class="btn-link">Go Back</a>
         </div>
         <div class="form">
-            <form action="/process_recipe" method="post" enctype="multipart/form-data">
+            <form action="/process_recipe_edit/{{curr_recipe.id}}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="title">Title</label>
@@ -43,8 +43,18 @@
                         <input class="form-control" placeholder="{{curr_recipe.book.title}}" type="text" name="book" id="book">
                     </div>
                 </div>                    
-                <!-- <label for="rating">Rating</label> -->
-                <!-- Rating will go here -->
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="book">Rating</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div> 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="notes">Notes</label>
                     <div class="col-sm-10">
@@ -63,7 +73,8 @@
                     </div>
                 </div>
             </form>
-            <form action="/delete/{{curr_recipe.id}}" method="post">
+            <form action="/delete_recipe/{{curr_recipe.id}}" method="post">
+                {% csrf_token %}
                 <div class="form-group row">
                     <div class="col-sm-10 offset-sm-2">
                     <button type="submit" class="btn btn-danger">Delete Recipe</button>

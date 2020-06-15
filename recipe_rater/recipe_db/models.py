@@ -34,6 +34,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=200)
     password = models.CharField(max_length=255)
+    objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -48,7 +49,7 @@ class Recipe(models.Model):
     book = models.ForeignKey(Book, related_name="recipes", on_delete=models.CASCADE)
     rating = models.CharField(max_length=1, null=True)
     notes = models.TextField()
-    photo = models.FileField(upload_to="images", null=True)
+    photo = models.FileField(upload_to="images", null=True, blank=True)
     poster = models.ForeignKey(User, related_name="posted_recipes", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
