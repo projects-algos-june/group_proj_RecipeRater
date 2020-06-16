@@ -19,36 +19,46 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="display-4">Welcome to the Recipe Rater</h1>
-        <div id="buffer"></div>
-        <div id="register">
-            <form action="/register" method="POST" class="form-signin">
-                {% csrf_token %}
-                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-                <label for="fname" class="sr-only">First Name</label>
-                <input type="text" name="fname" class="form-control" placeholder="First Name">
-                <label for="lname" class="sr-only">Last Name</label>
-                <input type="text" name="lname" class="form-control" placeholder="Last Name">
-                <label for="email" class="sr-only">Email Address</label>
-                <input type="email" name="email" class="form-control" placeholder="Email address">
-                <label for="pw" class="sr-only">Password</label>
-                <input type="password" name="pw" class="form-control" id="pw" placeholder="Password">
-                <label for="confpw" class="sr-only">Confirm Password</label>
-                <input type="password" name="confpw" class="form-control" id="confpw" placeholder="Confirm Password">
-                <button class="btn btn-md btn-dark btn-block" type="submit">Register</button>
-            </form>
-        </div>
-        <div id="login">
-            <form action="/login" method="POST" class="sign-in">
-                {% csrf_token %}
-                <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
-                <label for="signInEmail" class="sr-only">Email address</label>
-                <input type="email" id="signInEmail" class="form-control" placeholder="Email address" name="email">
-                <label for="signInPassword" class="sr-only">Password</label>
-                <input type="password" id="signInPassword" class="form-control" placeholder="Password" name="pw">
-                <button class="btn btn-md btn-dark btn-block" type="submit">Sign In</button>
-            </form>
-        </div>
+            <h1 class="display-4" id="title">Welcome to the Recipe Rater</h1>
+            <div class="d-flex justify-content-center">
+                <div id="register">
+                    <form action="/register" method="POST" class="form-signin">
+                        {% csrf_token %}
+                        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                        <label for="fname" class="sr-only">First Name</label>
+                        <input type="text" name="fname" class="form-control" placeholder="First Name">
+                        <label for="lname" class="sr-only">Last Name</label>
+                        <input type="text" name="lname" class="form-control" placeholder="Last Name">
+                        <label for="email" class="sr-only">Email Address</label>
+                        <input type="email" name="email" class="form-control" placeholder="Email address">
+                        <label for="pw" class="sr-only">Password</label>
+                        <input type="password" name="pw" class="form-control" id="pw" placeholder="Password">
+                        <label for="confpw" class="sr-only">Confirm Password</label>
+                        <input type="password" name="confpw" class="form-control" id="confpw" placeholder="Confirm Password">
+                        <button class="btn btn-md btn-dark btn-block" type="submit">Register</button>
+                    </form>
+                </div>
+                <div id="login">
+                    <form action="/login" method="POST" class="sign-in">
+                        {% csrf_token %}
+                        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+                        <label for="signInEmail" class="sr-only">Email address</label>
+                        <input type="email" id="signInEmail" class="form-control" placeholder="Email address" name="email">
+                        <label for="signInPassword" class="sr-only">Password</label>
+                        <input type="password" id="signInPassword" class="form-control" placeholder="Password" name="pw">
+                        <button class="btn btn-md btn-dark btn-block" type="submit">Sign In</button>
+                    </form>
+                </div>
+            </div>
+            <div id="errors">
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li class="error">{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
     </div>
 </body>
 </html>

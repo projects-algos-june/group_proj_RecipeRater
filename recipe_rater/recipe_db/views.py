@@ -77,7 +77,10 @@ def log_user(request):
                 request.session['log_status'] = 'logged in'
                 print(user_query.first_name, user_query.last_name, "was successfully logged in")
                 return redirect('/profile/'+str(user_query.id))
-    return redirect('/')
+            messages.error(request, 'Password was incorrect')
+            return redirect('/')
+        messages.error(request, 'Email address not found')
+        return redirect('/')
 
 # Flush user from request.session and return to Login page
 def logout(request):
@@ -90,13 +93,14 @@ def logout(request):
 
 # Process form for adding recipe
 def add_recipe(request):
-    if request.method == "POST" and request.FILES.get('photo', False):
-        # Add new photo to file system if present
-        pic = request.FILES['photo']
-        fs = FileSystemStorage()
-        new_photo = fs.save(pic.name, pic)
-        url = fs.url(new_photo)
-
+    if request.method == "POST":
+        url = None
+        if request.FILES.get('photo', False):
+            # Add new photo to file system if present
+            pic = request.FILES['photo']
+            fs = FileSystemStorage()
+            new_photo = fs.save(pic.name, pic)
+            url = fs.url(new_photo)
         # Filter for existing cookbooks
         book_query = Book.objects.filter(title=request.POST['book'])
         if len(book_query) > 0:
@@ -126,39 +130,8 @@ def add_recipe(request):
                 photo = url,
                 poster = User.objects.get(id=request.session['id'])
             )
+            print(f'{new_book.title} Successfully created')
             print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
-    elif request.method == "POST":
-        # Filter for existing cookbooks
-        book_query = Book.objects.filter(title=request.POST['book'])
-        if len(book_query) > 0:
-            # Change querySet to single item
-            book_query = book_query[0]
-            # Create new recipe
-            new_recipe = Recipe.objects.create(
-                title = request.POST['title'],
-                description = request.POST['desc'],
-                book = book_query,
-                rating = None,
-                notes = request.POST['notes'],
-                photo = None,
-                poster = User.objects.get(id=request.session['id'])
-            )
-            print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
-        else:
-            # If cookbook not found, create new cookbook from title
-            new_book = Book.objects.create(title=request.POST['book'])
-            # Create new recipe
-            new_recipe = Recipe.objects.create(
-                title = request.POST['title'],
-                description = request.POST['desc'],
-                book = new_book,
-                rating = None,
-                notes = request.POST['notes'],
-                photo = None,
-                poster = User.objects.get(id=request.session['id'])
-            )
-            print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
-        return redirect('/profile/'+str(request.session['id']))
     return redirect('/profile/'+str(request.session['id']))
 
 

@@ -21,13 +21,13 @@
             <div class="title">
                 <h1 class="display-4">Welcome {{request.session.user}}!</h1>
             </div>
-            <div class="nav">
-                <ul class="nav nav-fills nav-fill">
+            <div class="nav float-right">
+                <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a href="/add_recipe" class="nav-link">Add Recipe</a>
+                        <a href="/add_recipe" class="btn btn-primary">Add Recipe</a>
                     </li>
                     <li class="nav-item">
-                        <form action="/logout" method="POST" class="nav-link">
+                        <form action="/logout" method="POST">
                             {% csrf_token %}
                             <input type="submit" value="Logout" class="logout btn btn-outline-danger">
                         </form>
@@ -51,14 +51,14 @@
                 <tbody>
                 {% for recipe in user_recipes %}
                     <tr>
-                        <th scope="row"><a href="/recipe/{{recipe.id}}" class="link">{{recipe.title}}</a></th>
+                        <th scope="row"><p>{{recipe.title}}</p></th>
                         <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
                         <td><p class="text-break">{{recipe.description}}</p></td>
                         <td>{{recipe.book.title}}</td>
                         <td>{{recipe.rating}}</td>
                         <td><p class="text-break">{{recipe.notes}}</p></td>
                         {% if recipe.photo %}
-                        <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img img-fluid"></td>
+                        <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img"></td>
                         {% else %}
                         <td></td>
                         {% endif %}
