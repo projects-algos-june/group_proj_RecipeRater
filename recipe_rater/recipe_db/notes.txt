@@ -1,0 +1,9 @@
+full page recipes - Michael
+search for objects - Cookbook - Michael
+recipe steps - Michael
+how to make that work within the model and still allow for Jinja - look into how to do it.
+average user rating - look into icons recipe related  - Michael
+auto search for ingredients - Tobin
+////////prank “story” section - Tobin
+Users friend each other and see favorite recipes -Tobin
+sort recipes by rating/alphabetically/type - Tobin

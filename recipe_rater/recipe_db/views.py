@@ -17,13 +17,16 @@ def profile(request, id):
     context = {
         'user_recipes': user_info.posted_recipes.all()
     }
-    for recipe in context['user_recipes']:
-        print(recipe.title)
+    # for recipe in context['user_recipes']:
+    #     print(recipe.title)
     return render(request, 'user_profile.html', context)
 
 # Renders form to create new recipe
 def render_add_form(request):
-    return render(request, 'add_recipe.html')
+    context = {
+        'all_books': Book.objects.all()
+    }
+    return render(request, 'add_recipe.html', context)
 
 # Renders form to edit existing recipe
 def render_edit_form(request, id):
@@ -94,19 +97,28 @@ def logout(request):
 # Process form for adding recipe
 def add_recipe(request):
     if request.method == "POST":
-        url = None
-        if request.FILES.get('photo', False):
-            # Add new photo to file system if present
-            pic = request.FILES['photo']
-            fs = FileSystemStorage()
-            new_photo = fs.save(pic.name, pic)
-            url = fs.url(new_photo)
-        # Filter for existing cookbooks
-        book_query = Book.objects.filter(title=request.POST['book'])
-        if len(book_query) > 0:
-            # Change querySet to single item
-            book_query = book_query[0]
-            # Create new recipe
+        errors = Recipe.objects.recipe_validator(request.POST)
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+                return redirect('/add_recipe')
+        else:
+            url = None
+            if request.FILES.get('photo', False):
+                # Add new photo to file system if present
+                pic = request.FILES['photo']
+                fs = FileSystemStorage()
+                new_photo = fs.save(pic.name, pic)
+                url = fs.url(new_photo)
+            # Filter for existing cookbooks
+            book_query = Book.objects.filter(title=request.POST['book'])
+            if len(book_query) > 0:
+                # Change querySet to single item
+                book_query = book_query[0]
+                # Create new recipe
+            else:
+                new_book = Book.objects.create(title=request.POST['book'])
+                book_query = new_book
             new_recipe = Recipe.objects.create(
                 title = request.POST['title'],
                 description = request.POST['desc'],
@@ -116,21 +128,6 @@ def add_recipe(request):
                 photo = url,
                 poster = User.objects.get(id=request.session['id'])
             )
-            print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
-        else:
-            # If cookbook not found, create new cookbook from title
-            new_book = Book.objects.create(title=request.POST['book'])
-            # Create new recipe
-            new_recipe = Recipe.objects.create(
-                title = request.POST['title'],
-                description = request.POST['desc'],
-                book = new_book,
-                rating = None,
-                notes = request.POST['notes'],
-                photo = url,
-                poster = User.objects.get(id=request.session['id'])
-            )
-            print(f'{new_book.title} Successfully created')
             print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
     return redirect('/profile/'+str(request.session['id']))
 
@@ -164,26 +161,6 @@ def process_edit(request, id):
             to_edit.photo = url
         to_edit.rating = request.POST['rating']
         to_edit.save()
-    # elif request.method == "POST":
-    #     # Without File upload
-    #     # retrieve working recipe and cookbook
-    #     to_edit = Recipe.objects.get(id=id)
-    #     book_query = Book.objects.filter(title=request.POST['book'])
-    #     if len(book_query) > 0:
-    #         book_query = book_query[0]
-    #     else:
-    #         # If cookbook not found, create new cookbook from title
-    #         new_book = Book.objects.create(title=request.POST['book'])
-    #         book_query = new_book
-    #     if len(request.POST['title']) > 0:
-    #         to_edit.title = request.POST['title']
-    #     if len(request.POST['desc']) > 0:
-    #         to_edit.description = request.POST['desc']
-    #     if len(request.POST['book']) > 0:
-    #         to_edit.book = book_query
-    #     if len(request.POST['notes']) > 0:
-    #         to_edit.notes = request.POST['notes']
-    #     to_edit.save()
     return redirect('/profile/'+str(request.session['id']))
 
 

@@ -10,6 +10,20 @@ body {
     background: linear-gradient(to left, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.hidden {
+    display: none;
+}
+
 #header {
     margin: 25px 0px;
+}
+
+
+#errors {
+    text-align: center;
+}
+    .error {
+        color: red;
+        list-style: none;
+        font-size: 8pt;
 }

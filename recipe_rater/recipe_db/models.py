@@ -29,6 +29,13 @@ class UserManager(models.Manager):
             errors['last_name'] = ("Last name must be at least 2 characters")
         return errors
 
+class RecipeManager(models.Manager):
+    def recipe_validator(self, postData):
+        errors={}
+        if len(postData['story']) > 0:
+            errors['story'] = ("No one wants to read that. Stick to the recipe!")
+        return errors
+
 class User(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -51,6 +58,7 @@ class Recipe(models.Model):
     notes = models.TextField()
     photo = models.FileField(upload_to="images", null=True, blank=True)
     poster = models.ForeignKey(User, related_name="posted_recipes", on_delete=models.CASCADE)
+    objects = RecipeManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
