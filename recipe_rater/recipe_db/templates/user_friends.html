@@ -27,7 +27,7 @@
                         <a href="/add_recipe" class="btn btn-primary">Add Recipe</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/user_friends/{{request.session.id}}" class="btn btn-primary">My Friends</a>
+                        <a href="/profile/{{request.session.id}}" class="btn btn-primary">My Recipes</a>
                     </li>
                     <li class="nav-item">
                         <form action="/logout" method="POST">
@@ -38,37 +38,33 @@
                 </ul>
             </div>
         </div>
-        <div id="content">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Recipe</th>
-                        <th></th>
-                        <th>Description</th>
-                        <th>Cookbook</th>
-                        <th>Rating</th>
-                        <th>Notes</th>
-                        <th>Photo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for recipe in user_recipes %}
-                    <tr>
-                        <th scope="row"><p>{{recipe.title}}</p></th>
-                        <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
-                        <td><p class="text-break">{{recipe.description}}</p></td>
-                        <td>{{recipe.book.title}}</td>
-                        <td>{{recipe.rating}}</td>
-                        <td><p class="text-break">{{recipe.notes}}</p></td>
-                        {% if recipe.photo %}
-                        <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img"></td>
-                        {% else %}
-                        <td></td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <div id="user_lists">
+            <div class="users">
+                <h1 class="display-6">Users</h1>
+                <ul class="list-group">
+                    {% for user in users %}
+                    <li class="list-group-item">
+                        <a href="/friend_profile/{{user.id}}" class="btn btn-link">{{user.first_name}}</a> <form action="/add_friend/{{user.id}}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn-sm btn-success" type="submit">Add Friend</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="friends">
+                <h1 class="display-6">Friends</h1>
+                <ul class="list-group">
+                    {% for user in friends %}
+                    <li class="list-group-item">
+                        <a href="/friend_profile/{{user.friend.id}}" class="btn btn-link">{{user.friend.first_name}} {{user.friend.last_name}}</a> <form action="/remove_friend/{{user.id}}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn-sm btn-danger" type="submit">Remove Friend</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 </body>

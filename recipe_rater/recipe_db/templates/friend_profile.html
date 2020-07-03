@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{request.session.user}} | Recipes</title>
+    <title>{{curr_friend.first_name}} {{curr_friend.last_name}} | Recipes</title>
     
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -19,7 +19,7 @@
     <div class="container">
         <div id="header">
             <div class="title">
-                <h1 class="display-4">Welcome {{request.session.user}}!</h1>
+                <h1 class="display-4">{{curr_friend.first_name}} {{curr_friend.last_name}}'s Recipes</h1>
             </div>
             <div class="nav float-right">
                 <ul class="nav nav-pills">
@@ -27,7 +27,7 @@
                         <a href="/add_recipe" class="btn btn-primary">Add Recipe</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/user_friends/{{request.session.id}}" class="btn btn-primary">My Friends</a>
+                        <a href="/profile/{{request.session.id}}" class="btn btn-primary">My Recipes</a>
                     </li>
                     <li class="nav-item">
                         <form action="/logout" method="POST">

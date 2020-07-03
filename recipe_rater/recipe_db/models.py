@@ -62,3 +62,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Friendship(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    creator = models.ForeignKey(User, related_name="friendship_creator", on_delete=models.CASCADE)
+    friend = models.ForeignKey(User, related_name="friends", on_delete=models.CASCADE)

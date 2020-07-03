@@ -6,7 +6,9 @@ from .models import *
 import bcrypt
 
 
-#### Page Renders for site
+"""
+Page Renders for site
+"""
 # Log/Register page
 def index(request):
     return render(request, 'index.html')
@@ -20,6 +22,24 @@ def profile(request, id):
     # for recipe in context['user_recipes']:
     #     print(recipe.title)
     return render(request, 'user_profile.html', context)
+
+def friend_profile(request, id):
+    user_info = User.objects.get(id=id)
+    context = {
+        'curr_friend': user_info,
+        'user_recipes': user_info.posted_recipes.all()
+    }
+    # for recipe in context['user_recipes']:
+    #     print(recipe.title)
+    return render(request, 'friend_profile.html', context)
+
+def user_friends(request, id):
+    context = {
+        'curr_user': User.objects.get(id=id),
+        'users': User.objects.exclude(id=request.session['id']),
+        'friends': Friendship.objects.filter(creator=request.session['id'])
+    }
+    return render(request, 'user_friends.html', context)
 
 # Renders form to create new recipe
 def render_add_form(request):
@@ -44,7 +64,11 @@ def recipe_page(request, id):
 
 
 
-#### Redirect functionality of website
+"""
+Redirect functionality of website
+
+User manipulation and functionality
+"""
 # Register user
 def reg_user(request):
     if request.method == "POST":
@@ -92,8 +116,37 @@ def logout(request):
         request.session.flush()
         print("Session has been flushed")
         return redirect('/')
-    return redirect('/profile'+str(request.session['id']))
+    return redirect('/profile/'+str(request.session['id']))
 
+
+
+"""
+Friendship management views
+"""
+# Add Friend
+def add_friend(request, id):
+    if request.method == "POST":
+        curr_user = request.session['user']
+        new_friend = Friendship.objects.create(
+            creator = User.objects.get(id=request.session['id']),
+            friend = User.objects.get(id=id)
+        )
+        print(f'{curr_user} is now friends with {new_friend.friend.first_name}')
+        return redirect('/user_friends/'+str(request.session['id']))
+    return redirect('/user_friends/'+str(request.session['id']))
+
+def remove_friend(request, id):
+    if request.method == "POST":
+        to_remove = Friendship.objects.get(id=id)
+        print(f'Friendship with {to_remove.friend.first_name} {to_remove.friend.last_name} has been removed')
+        to_remove.delete()
+        return redirect('/user_friends/'+str(request.session['id']))
+    redirect('/user_friends/'+str(request.session['id']))
+
+
+"""
+Recipe views
+"""
 # Process form for adding recipe
 def add_recipe(request):
     if request.method == "POST":
@@ -130,7 +183,6 @@ def add_recipe(request):
             )
             print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
     return redirect('/profile/'+str(request.session['id']))
-
 
 # Process form for editing existing recipe
 def process_edit(request, id):
