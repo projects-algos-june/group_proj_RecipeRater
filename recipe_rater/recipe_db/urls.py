@@ -20,4 +20,7 @@ urlpatterns = [
     path('delete_recipe/<int:id>', views.delete_recipe),
     path('recipe/<int:id>', views.recipe_page),
     path('logout', views.logout),
+    path('profile_title/<int:id>', views.profile_name_prioity),
+    path('profile_book/<int:id>', views.profile_book_priority),
+    path('profile_rating/<int:id>', views.profile_rating_priority)
 ]

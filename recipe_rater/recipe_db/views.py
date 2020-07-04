@@ -13,15 +13,50 @@ Page Renders for site
 def index(request):
     return render(request, 'index.html')
 
+
+"""
+Start recipe ordering
+"""
+"""
+Recipes viewed in posted order
+"""
 # Renders recipes added by user
 def profile(request, id):
     user_info = User.objects.get(id=id)
     context = {
         'user_recipes': user_info.posted_recipes.all()
     }
-    # for recipe in context['user_recipes']:
-    #     print(recipe.title)
     return render(request, 'user_profile.html', context)
+"""
+Recipes viewed by name
+"""
+def profile_name_prioity(request, id):
+    user_info = User.objects.get(id=id)
+    context = {
+        'user_recipes': user_info.posted_recipes.all().order_by('title')
+    }
+    return render(request, 'user_profile.html', context)
+"""
+Recipes viewed by cookbook
+"""
+def profile_book_priority(request, id):
+    user_info = User.objects.get(id=id)
+    context = {
+        'user_recipes': user_info.posted_recipes.all().order_by('book')
+    }
+    return render(request, 'user_profile.html', context)
+"""
+Recipes viewed by rating
+"""
+def profile_rating_priority(request, id):
+    user_info = User.objects.get(id=id)
+    context = {
+        'user_recipes': user_info.posted_recipes.all().order_by('-rating')
+    }
+    return render(request, 'user_profile.html', context)
+
+
+
 
 def friend_profile(request, id):
     user_info = User.objects.get(id=id)
