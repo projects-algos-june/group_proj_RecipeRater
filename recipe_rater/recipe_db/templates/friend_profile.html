@@ -24,7 +24,7 @@
             <div class="nav float-right">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a href="/add_recipe" class="btn btn-primary">Add Recipe</a>
+                        <a href="/user_friends/{{request.session.id}}" class="btn btn-primary">My Friends</a>
                     </li>
                     <li class="nav-item">
                         <a href="/profile/{{request.session.id}}" class="btn btn-primary">My Recipes</a>
@@ -43,7 +43,6 @@
                 <thead>
                     <tr>
                         <th>Recipe</th>
-                        <th></th>
                         <th>Description</th>
                         <th>Cookbook</th>
                         <th>Rating</th>
@@ -55,7 +54,6 @@
                 {% for recipe in user_recipes %}
                     <tr>
                         <th scope="row"><p>{{recipe.title}}</p></th>
-                        <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
                         <td><p class="text-break">{{recipe.description}}</p></td>
                         <td>{{recipe.book.title}}</td>
                         <td>{{recipe.rating}}</td>

@@ -1,6 +1,6 @@
-{% if found === True %}
-<p class="text-danger">Account with email already exists.</p>
+{% if found == True %}
+<p class="text-danger eVal">Account with email is unavailable.</p>
 {% endif %}
-{% if found === False %}
-<p class="text-success">Account with email is available.</p>
+{% if found == False %}
+<p class="text-success eVal">Account with email is available.</p>
 {% endif %}

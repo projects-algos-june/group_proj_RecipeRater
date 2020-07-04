@@ -66,10 +66,28 @@ def recipe_page(request, id):
 
 """
 Redirect functionality of website
-
-User manipulation and functionality
 """
 # Register user
+"""
+Ajax validation for register and 
+"""
+def email_val(request):
+    if request.method == "POST":
+        found = False
+        user_query = User.objects.filter(email=request.POST['email'])
+        print(user_query)
+        if len(user_query) > 0:
+            found = True
+        context = {
+            'found': found
+        }
+        return render(request, 'partials/email.html', context)    
+    return redirect('/')
+
+
+"""
+User manipulation and functionality
+"""
 def reg_user(request):
     if request.method == "POST":
         errors = User.objects.register_validator(request.POST)
