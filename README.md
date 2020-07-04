@@ -1,4 +1,4 @@
-Tobin Risser's Solo Project__
+Tobin Risser's and Michael Plell's Project__
 
 Working Project Name: Recipe Rater
 
