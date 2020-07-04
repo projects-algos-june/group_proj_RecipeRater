@@ -1,11 +1,13 @@
 from django.urls import path
-from . import views
+from . import views, validators
 
 urlpatterns = [
     path('', views.index),
     path('register', views.reg_user),
-    path('email', views.email_val),
+    path('email', validators.email_val),
+    path('confpw', validators.pass_val),
     path('login', views.log_user),
+    path('email_login', validators.login_email_val),
     path('profile/<int:id>', views.profile),
     path('friend_profile/<int:id>', views.friend_profile),
     path('user_friends/<int:id>', views.user_friends),

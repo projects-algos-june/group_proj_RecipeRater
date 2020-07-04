@@ -38,13 +38,15 @@ body {
 
 #errors {
     text-align: center;
+    margin-top: 20px;
 }
-    .error {
+    /* .error {
         color: red;
         list-style: none;
         font-size: 8pt;
-}
+} */
 
 .eVal {
     font-size: 10pt;
+    list-style: none;
 }
