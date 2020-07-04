@@ -17,12 +17,15 @@ def index(request):
 def profile(request, id):
     user_info = User.objects.get(id=id)
     context = {
-        'user_recipes': user_info.posted_recipes.all()
+        'user_recipes': user_info.posted_recipes.all(),
+        'all_recipes' : Recipe.objects.all(),
+        'all_books' : Book.objects.all()
     }
     # for recipe in context['user_recipes']:
     #     print(recipe.title)
     return render(request, 'user_profile.html', context)
 
+<<<<<<< Updated upstream
 def friend_profile(request, id):
     user_info = User.objects.get(id=id)
     context = {
@@ -40,6 +43,20 @@ def user_friends(request, id):
         'friends': Friendship.objects.filter(creator=request.session['id'])
     }
     return render(request, 'user_friends.html', context)
+=======
+def bookpage(request, id):
+    context = {
+        'cookbook': Book.objects.get(id=id),
+        'all_recipes' : Recipe.objects.all()
+    }
+    return render(request, 'cookbook.html', context)
+
+def allrecipes(request):
+    context = {
+        'all_recipes' : Recipe.objects.all()
+    }
+    return render(request, 'allrecipes.html', context)
+>>>>>>> Stashed changes
 
 # Renders form to create new recipe
 def render_add_form(request):
@@ -63,6 +80,7 @@ def recipe_page(request, id):
     return render(request, 'recipe_page.html', context)
 
 
+<<<<<<< Updated upstream
 
 """
 Redirect functionality of website
@@ -70,6 +88,9 @@ Redirect functionality of website
 """
 User manipulation and functionality
 """
+=======
+#### Redirect functionality of website
+>>>>>>> Stashed changes
 # Register user
 def reg_user(request):
     if request.method == "POST":
@@ -151,11 +172,41 @@ Recipe views
 # Process form for adding recipe
 def add_recipe(request):
     if request.method == "POST":
+<<<<<<< Updated upstream
         errors = Recipe.objects.recipe_validator(request.POST)
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
                 return redirect('/add_recipe')
+=======
+        url = None
+        if request.FILES.get('photo', False):
+            # Add new photo to file system if present
+            pic = request.FILES['photo']
+            fs = FileSystemStorage()
+            new_photo = fs.save(pic.name, pic)
+            url = fs.url(new_photo)
+        # Filter for existing cookbooks
+        book_query = Book.objects.filter(title=request.POST['book'])
+        if len(book_query) > 0:
+            # Change querySet to single item
+            book_query = book_query[0]
+            # Create new recipe
+            new_recipe = Recipe.objects.create(
+                title = request.POST['title'],
+                description = request.POST['desc'],
+                book = book_query,
+                rating = None,
+                notes = request.POST['notes'],
+                photo = url,
+                poster = User.objects.get(id=request.session['id'])
+            )
+            print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
+            for i in range(0, int(request.POST['member'])):
+                print('step'+str(i))
+                Step.objects.create(recipe = new_recipe, content=request.POST['step'+str(i)])
+            
+>>>>>>> Stashed changes
         else:
             url = None
             if request.FILES.get('photo', False):
@@ -183,6 +234,10 @@ def add_recipe(request):
                 poster = User.objects.get(id=request.session['id'])
             )
             print(f'{new_recipe.title} recipe successfully created for {new_recipe.book.title}')
+            for i in range(0, int(request.POST['member'])):
+                print('step'+str(i))
+                Step.objects.create(recipe = new_recipe, content=request.POST['step'+str(i)])
+            
     return redirect('/profile/'+str(request.session['id']))
 
 # Process form for editing existing recipe
@@ -226,5 +281,28 @@ def delete_recipe(request, id):
         return redirect('/profile/'+str(request.session['id']))
 
 
+def search(request):
+    if request.method == 'POST':
+        results = request.POST['results']
+        user_id = request.POST['profile_id']
+        request.session['result'] = results
+    return redirect('/profile/' + str(user_id))
 
+def clearsearch(request, id):
+    request.session['result'] = ' '
+    return redirect('/profile/'+str(id))
+
+def rating(request, id):
+    recipe_rated = Recipe.objects.get(id=id)
+    user_rating = User.objects.get(id=request.session['id'])
+    recipe_rated.rated_by.add(user_rating)
+    if request.method == 'POST':   
+        recipe_rated.count = recipe_rated.count + 1
+        recipe_rated.rating = recipe_rated.rating + int(request.POST['rate'])
+        forks = recipe_rated.rating / recipe_rated.count
+        if recipe_rated.forks > 5:
+            recipe_rated.forks = 5
+        recipe_rated.forks = round(forks)
+        recipe_rated.save()
+    return redirect('/recipe/' + str(id))
 

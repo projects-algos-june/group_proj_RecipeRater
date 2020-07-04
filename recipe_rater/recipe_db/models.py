@@ -54,7 +54,10 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255)
     book = models.ForeignKey(Book, related_name="recipes", on_delete=models.CASCADE)
-    rating = models.CharField(max_length=1, null=True)
+    rating = models.IntegerField(default=0, editable=True)
+    forks = models.IntegerField(default=0, editable=True)
+    count = models.IntegerField(default=0, editable=True)
+    rated_by = models.ManyToManyField(User, related_name = "raters")
     notes = models.TextField()
     photo = models.FileField(upload_to="images", null=True, blank=True)
     poster = models.ForeignKey(User, related_name="posted_recipes", on_delete=models.CASCADE)
@@ -62,7 +65,13 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+<<<<<<< Updated upstream
 class Friendship(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     creator = models.ForeignKey(User, related_name="friendship_creator", on_delete=models.CASCADE)
     friend = models.ForeignKey(User, related_name="friends", on_delete=models.CASCADE)
+=======
+class Step(models.Model):
+    recipe = models.ForeignKey(Recipe, related_name="steps", on_delete=models.CASCADE)
+    content = models.CharField(max_length = 255)
+>>>>>>> Stashed changes

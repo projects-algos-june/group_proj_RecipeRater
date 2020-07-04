@@ -11,6 +11,9 @@
     <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!-- End Bootstrap -->
+    <!-- Awesomefonts -->
+    <script src="https://kit.fontawesome.com/d8911d9eb1.js" crossorigin="anonymous"></script>
+
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/add_recipe.css' %}">
@@ -48,7 +51,17 @@
                             </datalist>
                         </select>
                     </div>
+<<<<<<< Updated upstream
                 </div>                     
+=======
+                </div>    
+                <div class="form-group row">
+                    <lebel class="col-sm-2 col-form-label" for='steps'>Steps</lebel>
+                    <input type="text" id="member" name="member" value="" size="2" > Number of steps: (max. 10)<br />
+                        <a href="#" id="filldetails" onclick="addFields()">Add Steps</a>
+                        <div id="container" />
+                </div>                
+>>>>>>> Stashed changes
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="notes">Notes</label>
                     <div class="col-sm-10">
@@ -87,4 +100,30 @@
         </div>
     </div>
 </body>
+<script type='text/javascript'>
+    function addFields() {
+        // Number of inputs to create
+        var number = document.getElementById("member").value;
+        // Container <div> where dynamic content will be placed
+        var container = document.getElementById("container");
+        // Clear previous contents of the container
+        while (container.hasChildNodes()) {
+            container.removeChild(container.lastChild);
+        }
+        for (i = 0; i < number; i++) {
+            // Append a node with a random text
+            // container.appendChild(document.createTextNode("Step " + (i + 1)));
+            // Create an <input> element, set its type and name attributes
+            var input = document.createElement("input");
+            input.type = "textarea";
+            input.className = "form-control";
+            input.rows = "3";
+            input.placeholder = "Step " + (i+1);
+            input.name = "step" + i;
+            container.appendChild(input);
+            // Append a line break 
+            container.appendChild(document.createElement("br"));
+        }
+    }
+</script>
 </html>
