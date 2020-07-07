@@ -23,9 +23,11 @@ urlpatterns = [
     path('recipe/<int:id>', views.recipe_page),
     path('recipe/<int:id>/rating', views.rating),
     path('logout', views.logout),
-    path('search', views.search),
-    path('profile/<int:id>/clear', views.clearsearch),
     path('profile_title/<int:id>', views.profile_name_prioity),
     path('profile_book/<int:id>', views.profile_book_priority),
     path('profile_rating/<int:id>', views.profile_rating_priority),
+    path('search', views.search),
+    path('profile/<int:id>/clear', views.clearsearch),
+    path('user_friends/search', views.friendsearch),
+    path('user_friends/<int:id>/clear', views.clearfsearch),
 ]

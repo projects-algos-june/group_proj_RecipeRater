@@ -41,6 +41,27 @@
             </div>
         </div>
         <div id="user_lists">
+            <div class="findusers">
+                <h3 class="display-6">Find User by Email</h3>
+                <form action="/user_friends/search" method = "POST">
+                    {% csrf_token %}
+                    <input type = "search" name = "search" placeholder=" Email">
+                    <input type = "hidden" name = "profile_id" value = "{{request.session.id}}">
+                    <input type="submit" value = " Find ">
+                </form>
+            </div>
+            <div class="search">
+                {% for user in all_users %}
+                {% if request.session.result == user.email %}
+               <ul class="list-group">
+                   <li class="list-group-item"><a href="/friend_profile/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></li>
+               </ul>
+                {% endif %}
+                {% endfor %}
+                {% if request.session.result %}
+            <a href="/user_friends/{{request.session.id}}/clear" class="btn btn-success">clear search</a>
+            {% endif %}
+            </div>
             <div class="users">
                 <h1 class="display-6">Users</h1>
                 <ul class="list-group">

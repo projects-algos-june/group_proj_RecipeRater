@@ -20,16 +20,41 @@
     <!-- Awesomefonts -->
     <script src="https://kit.fontawesome.com/d8911d9eb1.js" crossorigin="anonymous"></script>
 
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/recipe.css' %}">
 </head>
 
 <body>
-    <div class="container">
-        <div id="header">
-            <h1>{{curr_recipe.title}}</h1>
-            <a href="/profile/{{request.session.id}}" class="btn-link">Go Back</a>
-        </div>
+    <!-- <div class="container"> -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="header">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src=""></a>
+                <h1>{{curr_recipe.title}}</h1>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarresponsive">
+                    <span class="navbar-toggler-icon"> </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/add_recipe">Add Recipe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user_friends/{{request.session.id}}">My Friends</a>
+                        </li>
+                        <li>
+                            <a href="/allrecipes" class="nav-link">Browse All Recipes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                
+             
+            </div>
+        </nav>
         <div class="content">
             <div id="desc">
                 <p>From: {{curr_recipe.book.title}}</p>
@@ -50,12 +75,13 @@
                     <i class="fas fa-utensils"></i>
                     <br>
 
-                    <input type="submit" value="Rate" onclick='setInput(this); button.style.visibility = "hidden";'>
+                    <input type="submit" value="Rate" id="ratebtn">
+
                 </form>
                 {% endif %}
 
                 <!-- <p>{{curr_recipe.rating}}</p> -->
-                <p>Current Recipe Rating:
+                <p>Current Recipe Rating:{{curr_recipe.forks}}
                     {% if curr_recipe.forks == 1 %}
                     <td><i class="fas fa-utensils"></i></td>
                     {% elif curr_recipe.forks == 2 %}
@@ -101,7 +127,7 @@
                 <img src="{{curr_recipe.photo}}" alt="{{curr_recipe.title}}">
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </body>
 
 </html>

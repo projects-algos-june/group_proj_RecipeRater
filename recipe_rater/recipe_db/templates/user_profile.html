@@ -75,14 +75,13 @@
                         {% for recipe in user_recipes %}
                         <tr>
                             <th scope="row">
-                                <p>{{recipe.title}}</p>
+                                <a href="/recipe/{{recipe.id}}">{{recipe.title}}</a>
                             </th>
                             <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
                             <td>
                                 <p class="text-break">{{recipe.description}}</p>
                             </td>
                             <td>{{recipe.book.title}}</td>
-                            <td>{{recipe.rating}}</td>
                             {% if recipe.forks == 1 %}
                             <td><i class="fas fa-utensils"></i></td>
                             {% elif recipe.forks == 2 %}
