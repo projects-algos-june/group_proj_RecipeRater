@@ -163,12 +163,10 @@ def log_user(request):
 
 # Flush user from request.session and return to Login page
 def logout(request):
-    if request.method == "POST":
-        print(request.session['user'], "has been successfully logged out")
-        request.session.flush()
-        print("Session has been flushed")
-        return redirect('/')
-    return redirect('/profile/'+str(request.session['id']))
+    request.session.flush()
+    print("Session has been flushed")
+    return redirect('/')
+    
 
 
 

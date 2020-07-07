@@ -34,7 +34,7 @@
                         <a href="/user_friends/{{request.session.id}}" class="btn btn-primary">My Friends</a>
                     </li>
                     <li class="nav-item">
-                        <form action="/logout" method="POST">
+                        <a href="/logout" >
                             {% csrf_token %}
                             <input type="submit" value="Logout" class="logout btn-sm btn-outline-danger">
                         </form>
