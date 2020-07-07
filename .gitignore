@@ -1,8 +1,0 @@
-# Ignore Mac system files
-.DS_store
-
-#Ignore text files
-*.txt
-
-#Ignore zipped archives
-*.zip
