@@ -41,7 +41,7 @@
                     </li>
                     <li><a href="/allrecipes" class="browse btn btn-secondary"><i class="fas fa-scroll"></i>Browse All
                             Recipes</a></li>
-                    </li>
+                   
 
                     <li>
                         <form action='/search' method='POST'>
@@ -62,17 +62,17 @@
                 {% endif %}
                 {% endfor %}
             </ol>
-
+            
             <ol class="list-group list-group-vertical">
                 {% for book in all_books %}
                 {% if book.title == request.session.result %}
-                <li class="list-group-item-info"> <a href="/book/{{book.id}}">{{book.title}}</a></li>
+                <li class="list-group-item-info"><a href="/book/{{book.id}}">{{book.title}}</a></li>
                 {% endif %}
                 {% endfor %}
             </ol>
-
-            {% if request.session.result != " " %}
-            <li><a href="/profile/{{request.session.id}}/clear" class="btn btn-success">clear search</a></li>
+            
+            {% if request.session.result %}
+            <a href="/profile/{{request.session.id}}/clear" class="btn btn-success">clear search</a>
             {% endif %}
         </div>
         <div id="content">
@@ -92,14 +92,13 @@
                     {% for recipe in user_recipes %}
                     <tr>
                         <th scope="row">
-                            <p>{{recipe.title}}</p>
+                            <a href="/recipe/{{recipe.id}}">{{recipe.title}}</a>
                         </th>
                         <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
                         <td>
                             <p class="text-break">{{recipe.description}}</p>
                         </td>
                         <td>{{recipe.book.title}}</td>
-                        <td>{{recipe.rating}}</td>
                         {% if recipe.forks == 1 %}
                         <td><i class="fas fa-utensils"></i></td>
                         {% elif recipe.forks == 2 %}

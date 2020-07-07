@@ -21,6 +21,7 @@
     <!-- End Bootstrap -->
     <!-- Awesomefonts -->
     <script src="https://kit.fontawesome.com/d8911d9eb1.js" crossorigin="anonymous"></script>
+ 
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/recipe.css' %}">
@@ -52,13 +53,14 @@
                     </select>
                     <i class="fas fa-utensils"></i>
                     <br>
-
-                    <input type="submit" value="Rate" onclick='setInput(this); button.style.visibility = "hidden";'>
+                   
+                    <input type="submit" value="Rate" id="ratebtn">
+                    
                 </form>
                 {% endif %}
 
                 <!-- <p>{{curr_recipe.rating}}</p> -->
-                <p>Current Recipe Rating:
+                <p>Current Recipe Rating:{{curr_recipe.forks}}
                     {% if curr_recipe.forks == 1 %}
                     <td><i class="fas fa-utensils"></i></td>
                     {% elif curr_recipe.forks == 2 %}
