@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from .models import *
+from .models import User, Book, Recipe, Friendship, Step, UserManager, RecipeManager
 import bcrypt
 
 
