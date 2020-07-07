@@ -1,7 +1,9 @@
 * {
     padding: 0;
     margin: 0;
-    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: axia, sans-serif;
+    font-weight: 400;
+    font-style: normal;
     /* outline: 1px solid firebrick; */
 }
 
@@ -11,25 +13,43 @@ body {
     background: linear-gradient(to left, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.header {
+    background: #BE441A;
+    padding: 20px 0;
+}
+    #title {
+        text-align: center;
+        color: whitesmoke;
+    }
+        .italic {
+            font-family: axia, sans-serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+
 #container {
     width: 900px;
     padding-top: 25px;
     text-align: center;
 }
 
-#title {
-    text-align: center;
-    margin-top: 25px;
-    /* background-color: whitesmoke; */
-}
 
 
+    #d_logo {
+        margin-top: 50px;
+    }
+        #rr-logo {
+            width: 100px;
+        }
 
     #register, #login {
         display: inline-block;
-        margin-top: 100px;
-        margin-left: 60px;
+        margin-top: 25px;
         vertical-align: top;
+    }
+    #login {
+        margin-left: 60px;
     }
 
         .btn {
@@ -39,6 +59,7 @@ body {
 #errors {
     text-align: center;
     margin-top: 20px;
+    height: 20px;
 }
     /* .error {
         color: red;

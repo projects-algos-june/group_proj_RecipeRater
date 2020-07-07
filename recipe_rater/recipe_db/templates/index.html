@@ -11,54 +11,66 @@
     <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!-- End Bootstrap -->
+    <!-- Adobe Font import -->
+    <link rel="stylesheet" href="https://use.typekit.net/sqm3qgp.css">
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/log_reg.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index_page.css' %}">
     <script defer src="{% static 'js/logReg.js' %}"></script>
+    <!-- favicon import -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 </head>
 <body>
+    <div class="header">
+        <h1 class="display-4" id="title">Welcome to the <span class="italic">Recipe Rater</span></h1>
+    </div>
     <div class="container">
-            <h1 class="display-4" id="title">Welcome to the Recipe Rater</h1>
-            <div class="d-flex justify-content-center">
-                <div id="register">
-                    <form action="/register" method="POST" class="form-signin registerForm">
-                        {% csrf_token %}
-                        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-                        <label for="fname" class="sr-only">First Name</label>
-                        <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name">
-                        <label for="lname" class="sr-only">Last Name</label>
-                        <input type="text" name="lname" class="form-control" placeholder="Last Name">
-                        <label for="email" class="sr-only">Email Address</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Email address">
-                        <label for="pw" class="sr-only">Password</label>
-                        <input type="password" name="pw" class="form-control" id="pw" placeholder="Password">
-                        <label for="confpw" class="sr-only">Confirm Password</label>
-                        <input type="password" name="confpw" class="form-control" id="confpw" placeholder="Confirm Password">
-                        <div id="Msg"></div>
-                        <button class="btn btn-md btn-dark btn-block" type="submit">Register</button>
-                    </form>
-                </div>
-                <div id="login">
-                    <form action="/login" method="POST" class="sign-in loginForm">
-                        {% csrf_token %}
-                        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
-                        <label for="signInEmail" class="sr-only">Email address</label>
-                        <input type="email" id="signInEmail" class="form-control" placeholder="Email address" name="email">
-                        <label for="signInPassword" class="sr-only">Password</label>
-                        <input type="password" id="signInPassword" class="form-control" placeholder="Password" name="pw">
-                        <button class="btn btn-md btn-dark btn-block" type="submit">Sign In</button>
-                    </form>
-                </div>
+        <div class="d-flex justify-content-center" id="d_logo">
+            <img src="/media/App Icon - 180x180.png" class="img-fluid align-middle" id="rr-logo" alt="Recipe Rater Logo">
+        </div>
+        <div class="d-flex justify-content-center">
+            <div id="register">
+                <form action="/register" method="POST" class="form-signin registerForm">
+                    {% csrf_token %}
+                    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                    <label for="fname" class="sr-only">First Name</label>
+                    <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name">
+                    <label for="lname" class="sr-only">Last Name</label>
+                    <input type="text" name="lname" class="form-control" placeholder="Last Name">
+                    <label for="email" class="sr-only">Email Address</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email address">
+                    <label for="pw" class="sr-only">Password</label>
+                    <input type="password" name="pw" class="form-control" id="pw" placeholder="Password">
+                    <label for="confpw" class="sr-only">Confirm Password</label>
+                    <input type="password" name="confpw" class="form-control" id="confpw" placeholder="Confirm Password">
+                    <div id="Msg"></div>
+                    <button class="btn btn-md btn-dark btn-block" type="submit">Register</button>
+                </form>
             </div>
-            <div id="errors">
-                {% if messages %}
-                <ul class="messages">    
-                    {% for message in messages %}    
-                        <li class="text-danger eVal">{{ message }}</li>    
-                    {% endfor %}
-                </ul>
-                {% endif %}
+            <div id="login">
+                <form action="/login" method="POST" class="sign-in loginForm">
+                    {% csrf_token %}
+                    <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+                    <label for="signInEmail" class="sr-only">Email address</label>
+                    <input type="email" id="signInEmail" class="form-control" placeholder="Email address" name="email">
+                    <label for="signInPassword" class="sr-only">Password</label>
+                    <input type="password" id="signInPassword" class="form-control" placeholder="Password" name="pw">
+                    <button class="btn btn-md btn-dark btn-block" type="submit">Sign In</button>
+                </form>
             </div>
+        </div>
+        <div id="errors">
+            {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li class="text-danger eVal">{{ message }}</li>    
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="align-middle">© 2020</p>
+        </div>
     </div>
 </body>
 </html>
