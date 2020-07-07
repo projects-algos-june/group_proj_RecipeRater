@@ -42,18 +42,22 @@
             {% for recipe in all_recipes %}
                 <tr>
                     <th scope="row"><a href="/recipe/{{recipe.id}}">{{recipe.title}}</a></th>
+                    {% if request.session.id == recipe.poster.id %}
                     <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
                     <td><p class="text-break">{{recipe.description}}</p></td>
                     <td><a href="/book/{{recipe.book.id}}">{{recipe.book.title}}</a></td>
-                    {% if recipe.rating == '1' %}
+                    {% if recipe.forks == 1 %}
                     <td><i class="fas fa-utensils"></i></td>
-                    {% elif recipe.rating == '2' %}
+                    {% elif recipe.forks == 2 %}
                     <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
-                    {% elif recipe.rating == '3' %}
+                    {% elif recipe.forks == 3 %}
                     <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
-                    {% elif recipe.rating == '4' %}
+                    {% elif recipe.forks == 4 %}
                     <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
-                    {% elif recipe.rating == '5' %}
+                    {% elif recipe.forks == 5 %}
                     <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
                     {% else %}
                     <td>Not Rated Yet</td>

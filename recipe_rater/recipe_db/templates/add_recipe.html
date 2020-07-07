@@ -49,15 +49,23 @@
                                 <option value="{{book.title}}">{{book.title}}</option>
                                 {% endfor %}
                             </datalist>
-                        </select>
+                        <!-- </select> -->
                     </div>
                 </div>    
                 <div class="form-group row">
-                    <lebel class="col-sm-2 col-form-label" for='steps'>Steps</lebel>
-                    <input type="text" id="member" name="member" value="" size="2" > Number of steps: (max. 10)<br />
+                    <label class="col-sm-2 col-form-label" for='steps'>Steps</label>
+                    <div class="col-sm-2">
+                    <input type="text" id="member" name="member" placeholder=" 0" size="2" rows="1"> Number of steps: (max. 10)<br />
                         <a href="#" id="filldetails" onclick="addFields()">Add Steps</a>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for='steps'></label>
+                    <div class="col-sm-2">
                         <div id="container" />
-                </div>                
+                        </div>  
+                    </div>
+                </div>         
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="notes">Notes</label>
                     <div class="col-sm-10">
@@ -78,11 +86,13 @@
                         <input class="form-control-file" placeholder="Add Photo" type="file" name="photo" id="photo">
                     </div>
                 </div> 
+
                 <div class="form-group row">
                     <div class="col-sm-10 offset-sm-2">
                       <button type="submit" class="btn btn-dark">Add Recipe</button>
                     </div>
                 </div>
+
             </form>
             <div id="errors">
                 {% if messages %}
@@ -113,7 +123,6 @@
             var input = document.createElement("input");
             input.type = "textarea";
             input.className = "form-control";
-            input.rows = "3";
             input.placeholder = "Step " + (i+1);
             input.name = "step" + i;
             container.appendChild(input);

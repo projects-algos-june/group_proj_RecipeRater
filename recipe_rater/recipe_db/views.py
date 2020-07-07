@@ -73,6 +73,7 @@ def friend_profile(request, id):
 def user_friends(request, id):
     context = {
         'curr_user': User.objects.get(id=id),
+        'all_users' : User.objects.all(),
         'users': User.objects.exclude(id=request.session['id']),
         'friends': Friendship.objects.filter(creator=request.session['id'])
     }
@@ -162,12 +163,10 @@ def log_user(request):
 
 # Flush user from request.session and return to Login page
 def logout(request):
-    if request.method == "POST":
-        print(request.session['user'], "has been successfully logged out")
-        request.session.flush()
-        print("Session has been flushed")
-        return redirect('/')
-    return redirect('/profile/'+str(request.session['id']))
+    request.session.flush()
+    print("Session has been flushed")
+    return redirect('/')
+    
 
 
 
@@ -207,6 +206,7 @@ def add_recipe(request):
                 messages.error(request, value)
                 return redirect('/add_recipe')
         url = None
+        print(request.session['id'])
         if request.FILES.get('photo', False):
             # Add new photo to file system if present
             pic = request.FILES['photo']
@@ -223,7 +223,7 @@ def add_recipe(request):
                 title = request.POST['title'],
                 description = request.POST['desc'],
                 book = book_query,
-                rating = None,
+                rating = 0,
                 notes = request.POST['notes'],
                 photo = url,
                 poster = User.objects.get(id=request.session['id'])
@@ -254,7 +254,7 @@ def add_recipe(request):
                 title = request.POST['title'],
                 description = request.POST['desc'],
                 book = book_query,
-                rating = None,
+                rating = 0,
                 notes = request.POST['notes'],
                 photo = url,
                 poster = User.objects.get(id=request.session['id'])
@@ -315,20 +315,36 @@ def search(request):
     return redirect('/profile/' + str(user_id))
 
 def clearsearch(request, id):
-    request.session['result'] = ' '
+    del request.session['result']
     return redirect('/profile/'+str(id))
 
 def rating(request, id):
-    recipe_rated = Recipe.objects.get(id=id)
-    user_rating = User.objects.get(id=request.session['id'])
-    recipe_rated.rated_by.add(user_rating)
-    if request.method == 'POST':   
-        recipe_rated.count = recipe_rated.count + 1
-        recipe_rated.rating = recipe_rated.rating + int(request.POST['rate'])
-        forks = recipe_rated.rating / recipe_rated.count
-        if recipe_rated.forks > 5:
-            recipe_rated.forks = 5
-        recipe_rated.forks = round(forks)
-        recipe_rated.save()
-    return redirect('/recipe/' + str(id))
+    if request.method == 'POST':
+        recipe_rated = Recipe.objects.get(id=id)
+        user_rating = User.objects.get(id=request.session['id'])
+        rater_query = User.objects.filter(raters=id)
+        print(rater_query)
+        if len(rater_query) == 0:
+            print("new user")
+            recipe_rated.rated_by.add(user_rating)  
+            recipe_rated.count = recipe_rated.count + 1
+            recipe_rated.rating = recipe_rated.rating + int(request.POST['rate'])
+            forks = recipe_rated.rating/recipe_rated.count
+            if forks > 5:
+                forks = 5
+            recipe_rated.forks = round(forks)
+            recipe_rated.save()
+            return redirect('/recipe/' + str(id))
+        return redirect('/recipe/' + str(id))
 
+def friendsearch(request):
+    user_id = request.POST['profile_id']
+    if len(request.POST['search']) > 0:
+        if request.method == 'POST':
+            results = request.POST['search']          
+            request.session['result'] = results
+    return redirect('/user_friends/' + str(user_id))
+
+def clearfsearch(request, id):
+    del request.session['result']
+    return redirect('/user_friends/'+str(id))
