@@ -20,11 +20,34 @@
 
 </head>
 <body>
-    <div class="container">
-        <div id="header">
-            <h1>Add Recipe</h1>
-            <a href="/profile/{{request.session.id}}" class="btn-link">Go Back</a>
-        </div>
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top" id="header">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="/media/App Icon - 60x60.png"></a>
+            <h2 class=""><a class="navbar-brand" href="/profile/{{request.session.id}}">{{request.session.user}}</a></h2>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarresponsive">
+                <span class="navbar-toggler-icon"> </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_recipe">Add Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user_friends/{{request.session.id}}">My Friends</a>
+                    </li>
+                    <li>
+                        <a href="/allrecipes" class="nav-link">Browse All Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </nav>
+   
+    <div class="container">  
+        <h1 class="bg-dark text-light text-center">Add Recipe</h1>
         <div class="form">
             <form action="/process_recipe" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -42,8 +65,8 @@
                 </div>   
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for="book">Cookbook</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" name="book" placeholder="Select Cookbook" list="books" />
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" class="form-control" name="book" placeholder="Select Cookbook" list="books" />
                             <datalist id="books">
                                 {% for book in all_books %}
                                 <option value="{{book.title}}">{{book.title}}</option>
@@ -54,14 +77,14 @@
                 </div>    
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for='steps'>Steps</label>
-                    <div class="col-sm-2">
-                    <input type="text" id="member" name="member" placeholder=" 0" size="2" rows="1"> Number of steps: (max. 10)<br />
+                    <div class="col-sm-4">
+                    <input type="text" id="member" name="member" placeholder=" 0" size="2" rows="1"> Number of steps:<br />
                         <a href="#" id="filldetails" onclick="addFields()">Add Steps</a>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" for='steps'></label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-10">
                         <div id="container" />
                         </div>  
                     </div>
@@ -104,7 +127,7 @@
                 {% endif %}
             </div>
         </div>
-    </div>
+    </div>  
 </body>
 <script type='text/javascript'>
     function addFields() {
