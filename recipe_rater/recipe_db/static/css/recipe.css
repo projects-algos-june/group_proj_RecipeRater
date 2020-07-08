@@ -21,6 +21,9 @@ img #food {
     }
 
 td {
-    height: 150px;
+    height: 100px;
 }
 
+form {
+    padding: 5px;
+}

@@ -100,7 +100,9 @@ def render_add_form(request):
 
 # Renders form to edit existing recipe
 def render_edit_form(request, id):
+    rec_steps = Step.objects.filter(recipe_id=id)
     context = {
+        'steps' : rec_steps,
         'curr_recipe': Recipe.objects.get(id=id)
     }
     return render(request, 'edit_recipe.html', context)
@@ -298,8 +300,14 @@ def process_edit(request, id):
             new_photo = fs.save(pic.name, pic)
             url = fs.url(new_photo)
             to_edit.photo = url
-        to_edit.rating = request.POST['rating']
+        # to_edit.rating = request.POST['rating']
         to_edit.save()
+        print(request.POST['steps'])
+        for i in range(1, int(request.POST['steps'])+1):
+            print(request.POST['step'+ str(i)])
+            edit_step = Step.objects.get(id=request.POST['step'+ str(i)])
+            edit_step.content = request.POST['content'+str(i)]
+            edit_step.save()
     return redirect('/profile/'+str(request.session['id']))
 
 

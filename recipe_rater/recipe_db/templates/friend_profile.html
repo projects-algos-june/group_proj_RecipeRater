@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
 </head>
 <body>
+    
     <nav class="navbar navbar-expand-md navbar-dark sticky-top" id="header">
         <div class="container-fluid">
             <a class="navbar-brand" href="/"><img src="/media/App Icon - 60x60.png"></a>
@@ -46,13 +47,16 @@
     </nav>
     
    
-        
-        <h5 class="text-center">Welcome to {{curr_friend.first_name}} {{curr_friend.last_name}}'s Page</h5>
-        
-        <div id="content">
+        <div class="bg-dark">
+        <h3 class="text-center text-white">Welcome to {{curr_friend.first_name}} {{curr_friend.last_name}}'s Page</h3>
+        <hr class="my-2">
+    </div>
+        <div class="container">
+        <div id="content" class="row">
+            <div class="col-14">
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr id="labels">
                         <th>Recipe</th>
                         <th>Description</th>
                         <th>Cookbook</th>
@@ -66,7 +70,7 @@
                     <tr>
                         <th scope="row"><a href="/recipe/{{recipe.id}}">{{recipe.title}}</a></th>
                         <td><p class="text-break">{{recipe.description}}</p></td>
-                        <td>{{recipe.book.title}}</td>
+                        <td><a href="/book/{{recipe.book.id}}">{{recipe.book.title}}</a></td>
                         
                             {% if recipe.forks == 1 %}
                             <td><i class="fas fa-utensils"></i></td>
@@ -76,10 +80,10 @@
                             <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i>
                             </td>
                             {% elif recipe.forks == 4 %}
-                            <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i>
+                            <td class="text-nowrap"><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i>
                                 <i class="fas fa-utensils"></i></td>
                             {% elif recipe.forks == 5 %}
-                            <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i>
+                            <td class="text-nowrap"><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i>
                                 <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
                             {% else %}
                             <td>Not Rated Yet</td>
@@ -87,7 +91,7 @@
                         
                         <td><p class="text-break">{{recipe.notes}}</p></td>
                         {% if recipe.photo %}
-                        <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img"></td>
+                        <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img" height="100px"></td>
                         {% else %}
                         <td></td>
                         {% endif %}
@@ -95,7 +99,9 @@
                 {% endfor %}
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
+</div>
 </body>
 </html>
