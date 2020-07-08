@@ -22,37 +22,42 @@
 </head>
 
 <body>
-    <div class="title">
-        <h1 class="display-4">Welcome {{request.session.user}}!</h1>
-    </div>
-    <div class="nav">
-        <div class="nav float-right">
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a href="/add_recipe" class="btn btn-primary">Add Recipe</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/user_friends/{{request.session.id}}" class="btn btn-primary">My Friends</a>
-                </li>
-                <li class="nav-item">
-                    <form action="/logout" method="POST">
-                        {% csrf_token %}
-                        <input type="submit" value="Logout" class="logout btn-sm btn-outline-danger">
-                    </form>
-                </li>
-                <li><a href="/allrecipes" class="browse btn btn-secondary"><i class="fas fa-scroll"></i>        Browse All
-                        Recipes</a></li>
-                </li>
-
-                <li>
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top" id="header">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="/media/App Icon - 60x60.png"></a>
+            <h2 class=""><a class="navbar-brand" href="/profile/{{request.session.id}}">{{request.session.user}}</a></h2>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarresponsive">
+                <span class="navbar-toggler-icon"> </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_recipe">Add Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user_friends/{{request.session.id}}">My Friends</a>
+                    </li>
+                    <li>
+                        <a href="/allrecipes" class="nav-link">Browse All Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </nav>
+   
+    
+        <div>      
                     <form action='/search' method='POST'>
                         {% csrf_token %}
                         <input type="hidden" name="profile_id" value={{request.session.id}}>
                         <input type="text" name="results">
                         <input type="submit" value="search">
                     </form>
-                </li>
-            </ul>
+               
+           
         </div>
     </div>
     <div class="container">
@@ -128,13 +133,14 @@
                     {% endfor %}
                 </ol>
                 <div class="mt-1">
-                    {% if request.session.result != " " %}
-                    <a href="/profile/{{request.session.id}}/clear" class="btn btn-success">clear search</a></li>
+                    {% if request.session.result %}
+                    <a href="/profile/{{request.session.id}}/clear" class="text-warning">clear search</a></li>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
+    
 </body>
 
 </html>

@@ -107,7 +107,9 @@ def render_edit_form(request, id):
 
 # Renders page displaying recipe
 def recipe_page(request, id):
+    steps = Step.objects.filter(recipe_id=id)
     context = {
+        'all_steps' : steps,
         'curr_recipe': Recipe.objects.get(id=id)
     }
     return render(request, 'recipe_page.html', context)
