@@ -62,7 +62,7 @@
     </div>
     <div class="container">
         <div id="content" class="row">
-            <div class="col-10">
+            <div class="col-12">
                 <table class="table table-striped">
                     <thead>
                         <tr id="labels">
@@ -107,7 +107,7 @@
                                 <p class="text-break">{{recipe.notes}}</p>
                             </td>
                             {% if recipe.photo %}
-                            <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img"></td>
+                            <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" class="img" height="100px"></td>
                             {% else %}
                             <td></td>
                             {% endif %}
@@ -140,7 +140,7 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 
 </html>
