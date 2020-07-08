@@ -31,7 +31,6 @@ tr {
 }
     #labels {
         height: 40px;
-        background: #BE441A;
         color: whitesmoke;
     }
 img {
@@ -49,6 +48,10 @@ li {
 .mt-1 {
     margin-top: 25px;
 }
+
+/* .mt-2 {
+    margin-top: 80px;
+} */
 
 
 .title {

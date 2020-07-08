@@ -47,24 +47,11 @@
             </div>
         </div> 
     </nav>
-   
-    
-        <div>      
-                    <form action='/search' method='POST'>
-                        {% csrf_token %}
-                        <input type="hidden" name="profile_id" value={{request.session.id}}>
-                        <input type="text" name="results">
-                        <input type="submit" value="search">
-                    </form>
-               
-           
-        </div>
-    </div>
     <div class="container">
         <div id="content" class="row">
             <div class="col-10">
                 <table class="table table-striped">
-                    <thead>
+                    <thead class="thead-dark">
                         <tr id="labels">
                             <th>Recipe</th>
                             <th></th>
@@ -117,6 +104,14 @@
                 </table>
             </div>
             <div class="col-2">
+                <div id="search">      
+                    <form action='/search' method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_id" value={{request.session.id}}>
+                        <input type="text" name="results">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>       
+                </div>
                 <ol class="list-group list-group-vertical">
                     {% for recipe in all_recipes %}
                     {% if recipe.title == request.session.result %}
@@ -134,7 +129,7 @@
                 </ol>
                 <div class="mt-1">
                     {% if request.session.result %}
-                    <a href="/profile/{{request.session.id}}/clear" class="text-warning">clear search</a></li>
+                    <a href="/profile/{{request.session.id}}/clear" class="btn btn-warning" role="button">clear search</a></li>
                     {% endif %}
                 </div>
             </div>
