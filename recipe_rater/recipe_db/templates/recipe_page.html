@@ -86,11 +86,17 @@
                 {% else %}
                 <td>{{curr_recipe.rated_by.count}} people have rated this recipe!</td>
                 {% endif %}
+                
             <hr class="my-4">
             </div>
             <div class="text-center">
+                {% if request.session.id == curr_recipe.poster.id %}
+                <a href="/edit_recipe/{{curr_recipe.id}}" class="btn btn-primary">Edit</a>
+                        {% endif %}
             <h4>Description: </h4>
             <p>{{curr_recipe.description}}</p>
+
+            <hr class="my-2">
         </div>
                 <!-- <p>{{curr_recipe.rating}}</p> -->
               
@@ -102,10 +108,11 @@
                         <div class="float-right">
                 
             
-                            {% if user.id == curr_recipe.poster.id %}
+                            {% if request.session.id == curr_recipe.poster.id %}
             
                             {% else %}
-                            <form class="" action="/recipe/{{curr_recipe.id}}/rating" method="POST">
+                        <div >
+                            <form class="form rounded bg-info text-white" action="/recipe/{{curr_recipe.id}}/rating" method="POST">
                                 {% csrf_token %}
                                 <label>Rate this Recipe:</label>
                                 <br>
@@ -120,9 +127,11 @@
                                 <i class="fas fa-utensils"> </i>
                               
                                 &nbsp;
-                                <input type="submit" value="Rate" id="ratebtn">
+                                <input type="submit" style="padding: 0 3px; border-radius: 15%; background-color:gray; color: white;" value="Rate" id="ratebtn">
             
                             </form>
+                          
+                        </div>
                             {% endif %}
                             <hr class="my-2">
                         </div>
@@ -130,7 +139,9 @@
                         <img id="food" width="600px" class="rounded float-right" src="{{curr_recipe.photo}}" alt="{{curr_recipe.title}}">
                     </div>
                     <div class="col-sm-12 col-md-10 col-lg-6">
-                        <p>Steps:</p>
+                        <br>
+                        <h5 class="text-center">Steps:</h5>
+
                         <ol class="offset-1">
                             {% for step in all_steps %}
                             {% if step.recipe.id == curr_recipe.id %}
@@ -139,7 +150,7 @@
                             {% endif %}
                             {% endfor %}
                         </ol>
-                        <hr class="my-2">
+                        
                         <div id="notes" class="text-center">
                             <p class="lead">Notes: <br>{{curr_recipe.notes}}</p>
                         </div>

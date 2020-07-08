@@ -46,8 +46,12 @@
         </div> 
     </nav>
    
-    <div class="container">  
-        <h1 class="bg-dark text-light text-center">Add Recipe</h1>
+    <div class="bg-dark text-light text-center">
+        <!-- <hr class="my-2"> -->
+        <h2>Add Recipe</h2>
+        <hr class="my-2">
+    </div>
+    <div class="container"> 
         <div class="form">
             <form action="/process_recipe" method="post" enctype="multipart/form-data">
                 {% csrf_token %}

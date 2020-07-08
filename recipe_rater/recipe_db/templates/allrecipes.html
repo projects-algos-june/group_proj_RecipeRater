@@ -79,15 +79,15 @@
                     {% elif recipe.forks == 3 %}
                     <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
                     {% elif recipe.forks == 4 %}
-                    <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
+                    <td class="text-nowrap"><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
                     {% elif recipe.forks == 5 %}
-                    <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
+                    <td class="text-nowrap"><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
                     {% else %}
                     <td>Not Rated Yet</td>
                     {% endif %}
                     <td><p class="text-break">{{recipe.notes}}</p></td>
                     {% if recipe.photo %}
-                    <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" height="150"></td>
+                    <td><img src="{{recipe.photo}}" alt="{{recipe.title}}" height="100"></td>
                     {% else %}
                     <td><a href="/recipe/{{recipe.id}}">Add a Photo</a></td>
                     {% endif %}
