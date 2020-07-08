@@ -322,8 +322,8 @@ def delete_recipe(request, id):
 
 def search(request):
     if request.method == 'POST':
-        results = request.POST['results']
-        user_id = request.POST['profile_id']
+        results = request.POST['results'].title()
+        user_id = request.POST['profile_id'].title()
         request.session['result'] = results
     return redirect('/profile/' + str(user_id))
 
@@ -335,10 +335,9 @@ def rating(request, id):
     if request.method == 'POST':
         recipe_rated = Recipe.objects.get(id=id)
         user_rating = User.objects.get(id=request.session['id'])
-        rater_query = User.objects.filter(raters=id)
-        print(rater_query)
-        if len(rater_query) == 0:
-            print("new user")
+        rater_query = User.objects.filter(raters=recipe_rated)
+        if user_rating not in rater_query:
+            print("new user is rating this")
             recipe_rated.rated_by.add(user_rating)  
             recipe_rated.count = recipe_rated.count + 1
             recipe_rated.rating = recipe_rated.rating + int(request.POST['rate'])
@@ -348,6 +347,7 @@ def rating(request, id):
             recipe_rated.forks = round(forks)
             recipe_rated.save()
             return redirect('/recipe/' + str(id))
+        print(f'{rater_query[0].first_name} has rated in the past.')
         return redirect('/recipe/' + str(id))
 
 def friendsearch(request):

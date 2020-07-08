@@ -16,6 +16,8 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+    <!-- favicon import -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark sticky-top" id="header">
@@ -43,64 +45,78 @@
             </div>
         </div> 
     </nav>
-    <div class="container">
-        <div id="user_lists">
-            <div class="findusers">
-                <h3 class="display-6">Find User by Email</h3>
-                <form action="/user_friends/search" method = "POST">
-                    {% csrf_token %}
-                    <input type = "search" name = "search" placeholder=" Email">
-                    <input type = "hidden" name = "profile_id" value = "{{request.session.id}}">
-                    <input type="submit" value = " Find ">
-                </form>
-            </div>
-            <div class="search">
-                {% for user in all_users %}
-                {% if request.session.result == user.email %}
-               <ul class="list-group">
-                   <li class="list-group-item"><a href="/friend_profile/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></li>
-               </ul>
-                {% endif %}
-                {% endfor %}
-                {% if request.session.result %}
-            <a href="/user_friends/{{request.session.id}}/clear" class="btn btn-success">clear search</a>
-            {% endif %}
-            </div>
-            <div class="friends">
-                <h1 class="display-6">Friends</h1>
-                    {% if friends|length > 0 %}
-                    {% else %}
-                    <p>You have no friends...sad</p>
-                    {% endif %}
-                <ul class="list-group">
-                    {% for user in friends %}
-                    <li class="list-group-item">
-                        <a href="/friend_profile/{{user.friend.id}}" class="btn btn-link">{{user.friend.first_name}} {{user.friend.last_name}}</a> <form action="/remove_friend/{{user.id}}" method="POST">
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-10">
+                <div id="user_lists">
+                    <div class="findusers">
+                        <h5 class="">Find User by Email</h5>
+                        <form action="/user_friends/search" method = "POST" class="form-inline my-2 my-sm-0">
                             {% csrf_token %}
-                            <button class="btn-sm btn-danger" type="submit">Remove Friend</button>
+                            <input class="form-control mr-sm-2" type = "search" name = "search" placeholder=" Email">
+                            <input type = "hidden" name = "profile_id" value = "{{request.session.id}}">
+                            <input class="btn btn-warning" type="submit" value = "Find">
                         </form>
-                    </li>
-                    {% endfor %}
-                </ul>
+                    </div>
+                    <div class="search mt-1">
+                        <ul class="list-group">
+                        {% for user in all_users %}
+                        {% if request.session.result == user.email %}
+                            <ul class="list-group-item list-inline">
+                                <li class="list-inline-item">
+                                <form action="/add_friend/{{user.id}}" method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn-sm btn-info text-sm" type="submit"><small>Add Friend</small></button>
+                                </form>
+                                </li>
+                                <li class="list-inline-item"><a href="/friend_profile/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></li>
+                            </ul>
+                        {% endif %}
+                        {% endfor %}
+                        </ul>
+                        {% if request.session.result %}
+                    <a href="/user_friends/{{request.session.id}}/clear" class="btn btn-success btn-sm mt-1">clear search</a>
+                    {% endif %}
+                    </div>
+                    <div class="friends mt-1">
+                        <h1 class="display-6">Friends</h1>
+                            {% if friends|length > 0 %}
+                            {% else %}
+                            <p>You have no friends...sad</p>
+                            {% endif %}
+                        <ul class="list-group">
+                            {% for user in friends %}
+                            <ul class="list-group-item list-inline">
+                                <li class="list-inline-item">
+                                    <form action="/remove_friend/{{user.id}}" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn-sm btn-danger" type="submit">Remove Friend</button>
+                                    </form>
+                                </li>
+                                <li class="list-inline-item"><a href="/friend_profile/{{user.friend.id}}" class="btn btn-link">{{user.friend.first_name}} {{user.friend.last_name}}</a></li>
+                            </ul>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
-          
-            <div class="users">
-                <h1 class="display-6">Users</h1>
+            <div class="col-2">
+                <h5 class="text-nowrap">Suggested Friends:</h5>
                 <ul class="list-group">
                     {% for user in users %}
                     
                 
                     <li class="list-group-item">
-                        <a href="/friend_profile/{{user.id}}" class="btn btn-link">{{user.first_name}}</a> <form action="/add_friend/{{user.id}}" method="POST">
+                        <a href="/friend_profile/{{user.id}}" class="text-info text-left text-nowrap">{{user.first_name}} {{user.last_name}}</a>
+                        <form action="/add_friend/{{user.id}}" method="POST">
                             {% csrf_token %}
-                            <button class="btn-sm btn-success" type="submit">Add Friend</button>
+                            <button class="btn-xs btn-info text-sm" type="submit"><small>Add Friend</small></button>
                         </form>
                     </li>
                     
                     {% endfor %}
                 </ul>
             </div>
-            
         </div>
     </div>
 </body>

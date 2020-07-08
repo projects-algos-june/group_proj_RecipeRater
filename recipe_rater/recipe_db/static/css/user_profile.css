@@ -40,39 +40,17 @@ li {
     list-style-position: inside;
    
 }
-    #clearList {
-        list-style: none;
-    } */
-/*  end general tags */
+
 
 .mt-1 {
-    margin-top: 25px;
+    margin-top: 20px !important;
 }
-
-/* .mt-2 {
-    margin-top: 80px;
-} */
-
+.mt-2 {
+    margin-top: 15px !important;
+}
 
 .title {
     color: whitesmoke;
     background: #BE441A;
     padding: 20px 0;
 }
-
-
-    /*.nav {
-        display: inline-block; 
-        vertical-align: top;
-        margin-top: 15px;
-    } 
-    .nav-item {
-        margin-right: 25px;
-    } */
-
-
-#content .btn {
-    font-size: 10pt;
-    padding: 2px 5px;
-}
-

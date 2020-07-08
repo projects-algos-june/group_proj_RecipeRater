@@ -43,13 +43,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Log Out</a>
                     </li>
+                    <form action='/search' method='POST' class="form-inline my-2 my-sm-0">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_id" value="{{request.session.id}}">
+                        <input class="form-control mr-sm-2" name="results" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-warning" type="submit">Search</button>
+                    </form> 
                 </ul>
             </div>
         </div> 
     </nav>
     <div class="container">
         <div id="content" class="row">
-            <div class="col-12">
+            <div class="col-10">
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr id="labels">
@@ -68,7 +74,7 @@
                             <th scope="row">
                                 <a href="/recipe/{{recipe.id}}">{{recipe.title}}</a>
                             </th>
-                            <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary">Edit</a></td>
+                            <td><a href="/edit_recipe/{{recipe.id}}" class="btn btn-primary btn-sm">Edit</a></td>
                             <td>
                                 <p class="text-break">{{recipe.description}}</p>
                             </td>
@@ -81,10 +87,10 @@
                             <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i
                                     class="fas fa-utensils"></i></td>
                             {% elif recipe.forks == 4 %}
-                            <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i
+                            <td class="text-nowrap"><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i
                                     class="fas fa-utensils"></i> <i class="fas fa-utensils"></i></td>
                             {% elif recipe.forks == 5 %}
-                            <td><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i
+                            <td class="text-nowrap"><i class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i
                                     class="fas fa-utensils"></i> <i class="fas fa-utensils"></i> <i
                                     class="fas fa-utensils"></i></td>
                             {% else %}
@@ -103,19 +109,16 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-2">
-                <div id="search">      
-                    <form action='/search' method='POST'>
-                        {% csrf_token %}
-                        <input type="hidden" name="profile_id" value={{request.session.id}}>
-                        <input type="text" name="results">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>       
+            <div class="col-2 mt-1">
+                <div id="search">
+                    {% if request.session.result %}
+                    <p class="text-dark">Search Results:</p>
+                    {% endif %}
                 </div>
                 <ol class="list-group list-group-vertical">
                     {% for recipe in all_recipes %}
                     {% if recipe.title == request.session.result %}
-                    <li class="list-group-item list-group-item-info"> <a href="/recipe/{{recipe.id}}">{{recipe.title}}</a></li>
+                    <li class="list-group-item py-1"> <a href="/recipe/{{recipe.id}}" class="text-info">{{recipe.title}}</a></li>
                     {% endif %}
                     {% endfor %}
                 </ol>
@@ -123,13 +126,13 @@
                 <ol class="list-group list-group-vertical">
                     {% for book in all_books %}
                     {% if book.title == request.session.result %}
-                    <li class=" list-group-item-sm list-group-item-info"> <a href="/book/{{book.id}}">{{book.title}}</a></li>
+                    <li class="list-group-item py-1"> <a href="/book/{{book.id}}" class="text-info">{{book.title}}</a></li>
                     {% endif %}
                     {% endfor %}
                 </ol>
-                <div class="mt-1">
+                <div class="mt-2">
                     {% if request.session.result %}
-                    <a href="/profile/{{request.session.id}}/clear" class="btn btn-warning" role="button">clear search</a></li>
+                    <a href="/profile/{{request.session.id}}/clear" class="btn btn-warning btn-sm" role="button">clear search</a></li>
                     {% endif %}
                 </div>
             </div>
