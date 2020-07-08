@@ -176,12 +176,15 @@ Friendship management views
 # Add Friend
 def add_friend(request, id):
     if request.method == "POST":
-        curr_user = request.session['user']
-        new_friend = Friendship.objects.create(
-            creator = User.objects.get(id=request.session['id']),
-            friend = User.objects.get(id=id)
-        )
-        print(f'{curr_user} is now friends with {new_friend.friend.first_name}')
+        curr_user = User.objects.get(id=request.session['id'])
+        requested_user = User.objects.get(id=id)
+        friend_query = Friendship.objects.filter(creator=curr_user, friend=requested_user)
+        if len(friend_query) == 0:
+            new_friend = Friendship.objects.create(
+                creator = curr_user,
+                friend = requested_user
+            )
+            print(f'{curr_user} is now friends with {new_friend.friend.first_name}')
         return redirect('/user_friends/'+str(request.session['id']))
     return redirect('/user_friends/'+str(request.session['id']))
 
