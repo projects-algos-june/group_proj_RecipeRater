@@ -1,17 +1,28 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: axia, sans-serif;
+    /* font-family: axia, sans-serif;
     font-weight: 400;
-    font-style: normal;
+    font-style: normal; */
     /* outline: 1px solid orange; */
     
 }
 
 /* General tag styles */
-body {
+/* body {
     background-color: rgb(247, 247, 247);
+} */
+body {
+    background: #ECE9E6;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+#header {
+    background: #BE441A;
+    padding: 20px 0;
+}
+
 ol {
     width: 150px;
 }
@@ -28,11 +39,12 @@ img {
 }
 li {
     list-style-position: inside;
+   
 }
     #clearList {
         list-style: none;
-    }
-/* end general tags */
+    } */
+/*  end general tags */
 
 .mt-1 {
     margin-top: 25px;
@@ -46,17 +58,14 @@ li {
 }
 
 
-.header {
-    padding: 20px;
-}
-    .nav {
-        /* display: inline-block; */
+    /*.nav {
+        display: inline-block; 
         vertical-align: top;
         margin-top: 15px;
-    }
+    } 
     .nav-item {
         margin-right: 25px;
-    }
+    } */
 
 
 #content .btn {

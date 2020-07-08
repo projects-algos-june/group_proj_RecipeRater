@@ -27,11 +27,11 @@
 
 <body>
     <!-- <div class="container"> -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="header">
+        <nav class="navbar navbar-expand-md navbar-dark sticky-top" id="header">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src=""></a>
-                <h1>{{curr_recipe.title}}</h1>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarresponsive">
+                <a class="navbar-brand" href="/"><img src="/media/App Icon - 60x60.png"></a>
+                <h2 class=""><a class="navbar-brand" href="/profile/{{request.session.id}}">{{request.session.user}}</a></h2>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                     <span class="navbar-toggler-icon"> </span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -50,38 +50,17 @@
                         </li>
                     </ul>
                 </div>
-                
-                
-             
-            </div>
+            </div> 
         </nav>
+
         <div class="content">
-            <div id="desc">
-                <p>From: {{curr_recipe.book.title}}</p>
-                {% if user.id == curr_recipe.poster.id %}
+            <div class="text-center bg-dark text-light" id="imgbgd">
+               
+                <h1 class="text-center">{{curr_recipe.title}}</h1>
+                
+                <h6>From:</h6>
+                <h3><a class="text-light" href="/book/{{curr_recipe.book.id}}">{{curr_recipe.book.title}}</a></h3>
 
-                {% else %}
-                <form action="/recipe/{{curr_recipe.id}}/rating" method="POST">
-                    {% csrf_token %}
-                    <label>Rate this Recipe:</label>
-                    <br>
-                    <select name="rate">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    <i class="fas fa-utensils"></i>
-                    <br>
-
-                    <input type="submit" value="Rate" id="ratebtn">
-
-                </form>
-                {% endif %}
-
-                <!-- <p>{{curr_recipe.rating}}</p> -->
-                <p>Current Recipe Rating:{{curr_recipe.forks}}
                     {% if curr_recipe.forks == 1 %}
                     <td><i class="fas fa-utensils"></i></td>
                     {% elif curr_recipe.forks == 2 %}
@@ -99,33 +78,80 @@
                     <td>Not Rated Yet</td>
                     {% endif %}
 
-                </p>
+                <br>
                 {% if curr_recipe.rated_by.count == 0 %}
-                <p>Be the first to rate this recipe!</p>
+                <td>Be the first to rate this recipe!</td>
                 {% elif curr_recipe.rated_by.count == 1 %}
-                <p>{{curr_recipe.rated_by.count}} person rated this recipe!</p>
+                <td>{{curr_recipe.rated_by.count}} person rated this recipe!</td>
                 {% else %}
-                <p>{{curr_recipe.rated_by.count}} people have rated this recipe!</p>
+                <td>{{curr_recipe.rated_by.count}} people have rated this recipe!</td>
                 {% endif %}
-                <p class="lead">{{curr_recipe.description}}</p>
+            <hr class="my-4">
             </div>
-            <div id="notes">
-                <p class="lead">{{curr_recipe.notes}}</p>
+            <div class="text-center">
+            <h4>Description: </h4>
+            <p>{{curr_recipe.description}}</p>
+        </div>
+                <!-- <p>{{curr_recipe.rating}}</p> -->
+              
+            
             </div>
-            <div>
-                <ol>
-                    {% for step in steps %}
-
-                    <li>{{step.content}}</li>
-                    <br>
-
-                    {% endfor %}
-                </ol>
+            <div class="container padding">
+                <div class="row padding">
+                    <div class="col-sm-12 col-md-10 col-lg-6">
+                        <div class="float-right">
+                
+            
+                            {% if user.id == curr_recipe.poster.id %}
+            
+                            {% else %}
+                            <form class="" action="/recipe/{{curr_recipe.id}}/rating" method="POST">
+                                {% csrf_token %}
+                                <label>Rate this Recipe:</label>
+                                <br>
+                                <select name="rate">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                &nbsp;
+                                <i class="fas fa-utensils"> </i>
+                              
+                                &nbsp;
+                                <input type="submit" value="Rate" id="ratebtn">
+            
+                            </form>
+                            {% endif %}
+                            <hr class="my-2">
+                        </div>
+                        
+                        <img id="food" width="600px" class="rounded float-right" src="{{curr_recipe.photo}}" alt="{{curr_recipe.title}}">
+                    </div>
+                    <div class="col-sm-12 col-md-10 col-lg-6">
+                        <p>Steps:</p>
+                        <ol class="offset-1">
+                            {% for step in all_steps %}
+                            {% if step.recipe.id == curr_recipe.id %}
+                            <li>{{step.content}}</li>
+                            
+                            {% endif %}
+                            {% endfor %}
+                        </ol>
+                        <hr class="my-2">
+                        <div id="notes" class="text-center">
+                            <p class="lead">Notes: <br>{{curr_recipe.notes}}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <hr class="my-4">
+                
             </div>
-            <div id="photo">
-                <p>User Photo:</p>
-                <img src="{{curr_recipe.photo}}" alt="{{curr_recipe.title}}">
-            </div>
+            
+            
+           
         </div>
     <!-- </div> -->
 </body>
